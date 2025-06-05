@@ -11,12 +11,13 @@ export async function getTodos() {
 
 export async function createTodo(formData: FormData) {
   const text = formData.get("text");
-  await supabase.from("todos").insert({ text });
+  const response = await supabase.from("todos").insert({ text });
   revalidatePath("/");
+  return response;
 }
 
 export async function deleteTodo(id: string) {
-  const res = await supabase.from("todos").delete().eq("id", id);
+  const response = await supabase.from("todos").delete().eq("id", id);
   revalidatePath("/");
-  return res;
+  return response;
 }
