@@ -11,9 +11,8 @@ export async function getTodos() {
 
 export async function createTodo(formData: FormData) {
   const text = formData.get("text");
-  const response = await supabase.from("todos").insert({ text });
+  await supabase.from("todos").insert({ text });
   revalidatePath("/");
-  return response;
 }
 
 export async function deleteTodo(id: string) {

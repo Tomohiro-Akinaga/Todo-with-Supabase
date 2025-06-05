@@ -1,17 +1,21 @@
 "use client";
 
+import { useFormStatus } from "react-dom";
 import { createTodo } from "./actions";
 
 export function TodoForm() {
-  const handleCreateTodo = async (formData: FormData) => {
-    const response = await createTodo(formData);
-    if (response.status === 201) console.log("Todo created successfully");
-  };
-
+  function SubmitButton() {
+    const status = useFormStatus();
+    return (
+      <button type="submit" disabled={status.pending}>
+        {status.pending ? "作成中" : "追加"}
+      </button>
+    );
+  }
   return (
-    <form action={handleCreateTodo}>
+    <form action={createTodo}>
       <input type="text" name="text" className="bg-red-50" />
-      <button type="submit">追加</button>
+      <SubmitButton />
     </form>
   );
 }
